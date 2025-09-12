@@ -20,4 +20,4 @@ for file in runglish_csv_files:
 
 print(translated_lines_amount)
 print(lines_amount)
-print(translated_lines_amount / lines_amount)
+print(f'{round(translated_lines_amount / lines_amount * 100, 3)}%')
