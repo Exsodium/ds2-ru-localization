@@ -18,6 +18,7 @@ for file in runglish_csv_files:
             if is_translated:
                 translated_lines_amount += 1
 
-print(translated_lines_amount)
-print(lines_amount)
-print(f'{round(translated_lines_amount / lines_amount * 100, 3)}%')
+with open('README.md', 'w', encoding='utf-8') as f:
+    f.write('# Прогресс перевода\n\n')
+    f.write(
+        f'Переведено {translated_lines_amount} из {lines_amount} строк. ({round(translated_lines_amount / lines_amount * 100, 3)})')
