@@ -21,4 +21,4 @@ for file in runglish_csv_files:
 with open('README.md', 'w', encoding='utf-8') as f:
     f.write('# Прогресс перевода\n\n')
     f.write(
-        f'Переведено {translated_lines_amount} из {lines_amount} строк. ({round(translated_lines_amount / lines_amount * 100, 3)})')
+        f'Переведено {translated_lines_amount} из {lines_amount} строк. ({round(translated_lines_amount / lines_amount * 100, 3)}%)')
