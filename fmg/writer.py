@@ -230,27 +230,22 @@ class FmgWriter:
 
     def write_unicode_string(self, offset: int, string: str) -> None:
         self.fmg_file.seek(offset)
-        fmt = '<H'
-
-        for char in string:
-            unicode_value = ord(char)
-            self.fmg_file.write(struct.pack(fmt, unicode_value))
+        encoded_string = string.encode('utf-16-le')
+        self.fmg_file.write(encoded_string)
 
     def write_int(self, int_type: int, offset: int, value: int) -> None:
         self.fmg_file.seek(offset)
 
         match int_type:
             case 8:
-                self.fmg_file.write(struct.pack('b', value))
+                format = 'b'
             case 16:
-                fmt = '<h'
-                self.fmg_file.write(struct.pack(fmt, value))
+                format = '<h'
             case 32:
-                fmt = '<i'
-                self.fmg_file.write(struct.pack(fmt, value))
+                format = '<i'
+
+        self.fmg_file.write(struct.pack(format, value))
 
 
 if __name__ == '__main__':
-    writer = FmgWriter()
-    writer.write_csv_file_to_fmg(
-        Path(r'text\runglish\win32onlymessage.fmg.csv'))
+    pass

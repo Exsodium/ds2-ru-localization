@@ -1,4 +1,5 @@
 from io import BufferedReader
+import struct
 
 
 class FmgReader:
@@ -8,28 +9,28 @@ class FmgReader:
 
         match int_type:
             case 8:
-                byte = file.read(1)
+                size = 1
+                format_char = 'b'
             case 32:
-                byte = file.read(4)
+                size = 4
+                format_char = 'i'
 
-        value = int.from_bytes(byte, byteorder='little', signed=True)
-        return value
+        data = file.read(size)
+        return struct.unpack('<' + format_char, data)[0]
 
     @staticmethod
     def read_unicode_string(file: BufferedReader, offset: int) -> str:
         file.seek(offset)
-        result = str()
 
-        while True:
-            byte = file.read(2)
-            char = byte.decode('utf-16-le')
+        max_bytes = 4096
+        data = file.read(max_bytes)
 
-            if char == '\x00':
+        for i in range(0, len(data) - 1, 2):
+            if data[i] == 0 and data[i + 1] == 0:
+                data = data[:i]
                 break
 
-            result += char
-
-        return result
+        return data.decode('utf-16-le') if data else ''
 
 
 if __name__ == '__main__':
