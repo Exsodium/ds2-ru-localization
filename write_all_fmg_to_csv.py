@@ -1,6 +1,5 @@
 from pathlib import Path
 from fmg.writer import FmgWriter
-from time import time
 
 EXT = '*.fmg'
 
